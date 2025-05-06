@@ -51,6 +51,25 @@
         .product {
             font-size: 28px;
         }
+        .ai-section {
+            margin-top: 50px;
+        }
+        .ai-chat {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .ai-chat input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .response {
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +79,8 @@
     <div class="navbar">
         <button onclick="showSection('login-section')">تسجيل الدخول</button>
         <button onclick="showSection('cart-section')">سلة المشتريات</button>
+        <button onclick="showSection('accounts-section')">حسابات</button>
+        <button onclick="showSection('fruits-section')">فواكه</button>
     </div>
 
     <!-- صفحة تسجيل الدخول -->
@@ -70,13 +91,11 @@
         <button onclick="login()">تسجيل الدخول</button>
     </div>
 
-    <!-- صفحة السلة -->
-    <div id="cart-section" class="section">
-        <h2>سلة المشتريات</h2>
-        <ul id="cart-items" class="cart-items">
-            <!-- يتم إضافة المنتجات هنا -->
-        </ul>
-        <button onclick="checkout()">إتمام الشراء</button>
+    <!-- صفحة السؤال عن الذكاء الاصطناعي -->
+    <div id="ai-question-section" class="section">
+        <h2>هل تريد استخدام ميزة الذكاء الاصطناعي؟</h2>
+        <button onclick="startAI('no')">لا أريد، أريد فقط أن أطلب</button>
+        <button onclick="startAI('yes')">الذكاء الاصطناعي</button>
     </div>
 
     <!-- صفحة الحسابات -->
@@ -109,16 +128,22 @@
         </div>
     </div>
 
+    <!-- صفحة الذكاء الاصطناعي -->
+    <div id="ai-section" class="section">
+        <h2>الدردشة مع الذكاء الاصطناعي</h2>
+        <input type="text" id="ai-question" placeholder="أرسل سؤالك هنا" size="50">
+        <button onclick="sendMessage()">إرسال الرسالة</button>
+
+        <div class="ai-chat" id="ai-response"></div>
+    </div>
+
     <script>
         let cart = [];
 
         function showSection(section) {
-            // إخفاء كل الأقسام
             document.querySelectorAll('.section').forEach(function(element) {
                 element.classList.remove('show');
             });
-
-            // إظهار القسم المحدد
             document.getElementById(section).classList.add('show');
         }
 
@@ -127,9 +152,17 @@
             const password = document.getElementById('password').value;
             if (username && password) {
                 alert('تم تسجيل الدخول كـ ' + username);
-                showSection('accounts-section');
+                showSection('ai-question-section'); // بعد التسجيل يتم نقل المستخدم إلى صفحة الذكاء الاصطناعي
             } else {
                 alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
+            }
+        }
+
+        function startAI(choice) {
+            if (choice === 'yes') {
+                showSection('ai-section'); // نقل المستخدم إلى صفحة الذكاء الاصطناعي
+            } else {
+                showSection('accounts-section'); // العودة إلى قسم الحسابات إذا اختار المستخدم عدم استخدام الذكاء الاصطناعي
             }
         }
 
@@ -138,17 +171,27 @@
             alert(item + ' تم إضافتها إلى السلة');
         }
 
-        function checkout() {
-            if (cart.length > 0) {
-                let cartSummary = '';
-                cart.forEach(function(item) {
-                    cartSummary += `<li>${item}</li>`;
-                });
-                document.getElementById('cart-items').innerHTML = cartSummary;
-                alert('تم إتمام الطلب بنجاح');
+        function sendMessage() {
+            const question = document.getElementById('ai-question').value;
+            const responseDiv = document.getElementById('ai-response');
+            if (question) {
+                // هنا يمكنك تخصيص إجابة البوت بناءً على السؤال
+                responseDiv.innerHTML = `<div><strong>سؤال:</strong> ${question}</div>`;
+                responseDiv.innerHTML += `<div><strong>جواب البوت:</strong> إليك السكربت أو المميزات الخاصة بك...<br>نسخ السكربت: <button onclick="copyScript()">نسخ السكربت</button></div>`;
             } else {
-                alert('لا توجد منتجات في السلة');
+                alert('الرجاء إدخال السؤال');
             }
+        }
+
+        function copyScript() {
+            const scriptText = "هذا هو السكربت الذي طلبته: ..."; // السكربت الذي يرسله البوت
+            const tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.value = scriptText;
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert('تم نسخ السكربت');
         }
     </script>
 
