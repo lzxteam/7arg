@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر حرق</title>
+    <title>الذكاء الاصطناعي</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,45 +11,9 @@
             color: white;
             text-align: center;
         }
-        h1, h2, h3 {
+        h1 {
             font-size: 40px;
             margin: 20px 0;
-        }
-        input, button {
-            font-size: 20px;
-            padding: 10px;
-            margin: 10px;
-            width: 300px;
-        }
-        .navbar {
-            margin-top: 30px;
-        }
-        .navbar button {
-            background-color: #444;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 15px;
-            margin: 10px;
-            font-size: 22px;
-        }
-        .section {
-            display: none;
-            margin-top: 20px;
-        }
-        .show {
-            display: block;
-        }
-        .cart-items {
-            list-style-type: none;
-            padding: 0;
-            font-size: 25px;
-        }
-        .cart-items li {
-            margin: 10px 0;
-        }
-        .product {
-            font-size: 28px;
         }
         .ai-section {
             margin-top: 50px;
@@ -69,68 +33,18 @@
             padding: 10px;
             background-color: #333;
             border-radius: 5px;
+            max-width: 80%;
+            margin: 10px auto;
+            text-align: left;
         }
     </style>
 </head>
 <body>
 
-    <h1>مرحباً بك في متجر حرق</h1>
+    <h1>الدردشة مع الذكاء الاصطناعي</h1>
 
-    <div class="navbar">
-        <button onclick="showSection('login-section')">تسجيل الدخول</button>
-        <button onclick="showSection('cart-section')">سلة المشتريات</button>
-        <button onclick="showSection('accounts-section')">حسابات</button>
-        <button onclick="showSection('fruits-section')">فواكه</button>
-    </div>
-
-    <!-- صفحة تسجيل الدخول -->
-    <div id="login-section" class="section show">
-        <h2>تسجيل الدخول</h2>
-        <input type="text" id="username" placeholder="ضع اسمك هنا" required><br>
-        <input type="password" id="password" placeholder="ضع كلمة المرور هنا" required><br>
-        <button onclick="login()">تسجيل الدخول</button>
-    </div>
-
-    <!-- صفحة السؤال عن الذكاء الاصطناعي -->
-    <div id="ai-question-section" class="section">
-        <h2>هل تريد استخدام ميزة الذكاء الاصطناعي؟</h2>
-        <button onclick="startAI('no')">لا أريد، أريد فقط أن أطلب</button>
-        <button onclick="startAI('yes')">الذكاء الاصطناعي</button>
-    </div>
-
-    <!-- صفحة الحسابات -->
-    <div id="accounts-section" class="section">
-        <h2>الحسابات</h2>
-        <div class="product">
-            <p>حساب عشوائي - 500 روبوكس</p>
-            <button onclick="addToCart('حساب عشوائي - 500 روبوكس')">إضافة إلى السلة</button>
-        </div>
-        <div class="product">
-            <p>حساب ماكس مع فواكه - 4500 روبوكس</p>
-            <button onclick="addToCart('حساب ماكس مع فواكه - 4500 روبوكس')">إضافة إلى السلة</button>
-        </div>
-    </div>
-
-    <!-- صفحة الفواكه -->
-    <div id="fruits-section" class="section">
-        <h2>الفواكه</h2>
-        <div class="product">
-            <p>فاكهة التيركس - 350 روبوكس</p>
-            <button onclick="addToCart('فاكهة التيركس - 350 روبوكس')">إضافة إلى السلة</button>
-        </div>
-        <div class="product">
-            <p>فاكهة الكنترول - 200 روبوكس</p>
-            <button onclick="addToCart('فاكهة الكنترول - 200 روبوكس')">إضافة إلى السلة</button>
-        </div>
-        <div class="product">
-            <p>فاكهة الغاز - 1000 روبوكس</p>
-            <button onclick="addToCart('فاكهة الغاز - 1000 روبوكس')">إضافة إلى السلة</button>
-        </div>
-    </div>
-
-    <!-- صفحة الذكاء الاصطناعي -->
-    <div id="ai-section" class="section">
-        <h2>الدردشة مع الذكاء الاصطناعي</h2>
+    <div id="ai-section" class="ai-section">
+        <h2>اكتب سؤالك:</h2>
         <input type="text" id="ai-question" placeholder="أرسل سؤالك هنا" size="50">
         <button onclick="sendMessage()">إرسال الرسالة</button>
 
@@ -138,60 +52,33 @@
     </div>
 
     <script>
-        let cart = [];
-
-        function showSection(section) {
-            document.querySelectorAll('.section').forEach(function(element) {
-                element.classList.remove('show');
-            });
-            document.getElementById(section).classList.add('show');
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            if (username && password) {
-                alert('تم تسجيل الدخول كـ ' + username);
-                showSection('ai-question-section'); // بعد التسجيل يتم نقل المستخدم إلى صفحة الذكاء الاصطناعي
-            } else {
-                alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
-            }
-        }
-
-        function startAI(choice) {
-            if (choice === 'yes') {
-                showSection('ai-section'); // نقل المستخدم إلى صفحة الذكاء الاصطناعي
-            } else {
-                showSection('accounts-section'); // العودة إلى قسم الحسابات إذا اختار المستخدم عدم استخدام الذكاء الاصطناعي
-            }
-        }
-
-        function addToCart(item) {
-            cart.push(item);
-            alert(item + ' تم إضافتها إلى السلة');
-        }
-
+        // إرسال الرسالة للذكاء الاصطناعي
         function sendMessage() {
             const question = document.getElementById('ai-question').value;
             const responseDiv = document.getElementById('ai-response');
             if (question) {
-                // هنا يمكنك تخصيص إجابة البوت بناءً على السؤال
-                responseDiv.innerHTML = `<div><strong>سؤال:</strong> ${question}</div>`;
-                responseDiv.innerHTML += `<div><strong>جواب البوت:</strong> إليك السكربت أو المميزات الخاصة بك...<br>نسخ السكربت: <button onclick="copyScript()">نسخ السكربت</button></div>`;
+                let response = '';
+
+                // قواعد للرد على بعض الجمل
+                if (question.includes('هلا')) {
+                    response = 'أهلين!';
+                } else if (question.includes('السلام عليكم')) {
+                    response = 'عليكم السلام كيفك؟';
+                } else if (question.includes('بخير')) {
+                    response = 'دوم يارب!';
+                } else if (question.includes('أبي اسوي ماب بلوكس فروت')) {
+                    response = 'إليك السكربت لعمل ماب مثل بلوكس فروت: \n سكربت الفلوس...';
+                } else if (question.includes('انقلع')) {
+                    response = 'دز';
+                } else {
+                    response = 'أنا هنا للمساعدة! ماذا تريد؟';
+                }
+
+                responseDiv.innerHTML += `<div class="response"><strong>سؤال:</strong> ${question}</div>`;
+                responseDiv.innerHTML += `<div class="response"><strong>جواب البوت:</strong> ${response}</div>`;
             } else {
                 alert('الرجاء إدخال السؤال');
             }
-        }
-
-        function copyScript() {
-            const scriptText = "هذا هو السكربت الذي طلبته: ..."; // السكربت الذي يرسله البوت
-            const tempInput = document.createElement('input');
-            document.body.appendChild(tempInput);
-            tempInput.value = scriptText;
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            alert('تم نسخ السكربت');
         }
     </script>
 
